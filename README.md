@@ -1,7 +1,7 @@
 # ModelUpgradeSolution
 
 ```cs
-// You need to create it what inheritance IModelUpgrade
+// You need to create it which inheritance IModelUpgrade
 var modelUpgrade = new YourModelUpgrade();
 
 // Create a converter.
