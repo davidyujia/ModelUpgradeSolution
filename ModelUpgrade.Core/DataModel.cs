@@ -4,6 +4,9 @@ using System.Text;
 
 namespace ModelUpgrade.Core
 {
+    /// <summary>
+    /// Data for saving
+    /// </summary>
     public sealed class DataModel
     {
         public DataModel() { }

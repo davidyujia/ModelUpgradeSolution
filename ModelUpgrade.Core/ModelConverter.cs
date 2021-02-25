@@ -13,6 +13,11 @@ namespace ModelUpgrade.Core
             _modelUpgrade = modelUpgrade;
         }
 
+        /// <summary>
+        /// Parses IVersionModel to data model.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public DataModel Parse(IVersionModel model)
         {
             if (model == null)
@@ -30,6 +35,11 @@ namespace ModelUpgrade.Core
             };
         }
 
+        /// <summary>
+        /// Parses data model to IVersionModel.
+        /// </summary>
+        /// <param name="model">The model.</param>
+        /// <returns></returns>
         public TNewestModel Parse(DataModel model)
         {
             var newModel = GetNewest(model);

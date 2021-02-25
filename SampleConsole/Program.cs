@@ -8,17 +8,22 @@ namespace SampleConsole
     {
         static void Main(string[] args)
         {
+            // Create a converter.
             var modelUpgrade = new MyModelUpgrade();
-            var converter = new ModelConverter<Version2>(modelUpgrade);
+            var converter = new ModelConverter<Version3>(modelUpgrade);
 
-            // Data From Database
+            // Sample data, it's from database.
             var dbData = new DataModel(new Version1
             {
                 Uid = "TestV1",
                 Name = "Test1"
             }, modelUpgrade.Serialize);
 
-            var v2 = converter.Parse(dbData);
+            // Parses your saved data to the v3 model.
+            var v3 = converter.Parse(dbData);
+
+            // Parses v3 model to data model for saving.
+            var v3DbModel = converter.Parse(v3);
         }
     }
 
@@ -39,6 +44,7 @@ namespace SampleConsole
             return model switch
             {
                 Version1 v1 => V1ToV2(v1),
+                Version2 v2 => V2ToV3(v2),
                 _ => throw new Exception()
             };
         }
@@ -49,6 +55,15 @@ namespace SampleConsole
             {
                 Id = v1.Uid,
                 ProjectName = v1.Name
+            };
+        }
+
+        private static Version3 V2ToV3(Version2 v2)
+        {
+            return new Version3
+            {
+                ProjectId = v2.Id,
+                ProjectName = v2.ProjectName
             };
         }
     }
@@ -81,6 +96,21 @@ namespace SampleConsole
             return GetType().Name;
         }
         public string Id { get; set; }
+        public string ProjectName { get; set; }
+    }
+
+    class Version3 : IVersionModel
+    {
+        public string GetId()
+        {
+            return ProjectId;
+        }
+
+        public string GetModelName()
+        {
+            return GetType().Name;
+        }
+        public string ProjectId { get; set; }
         public string ProjectName { get; set; }
     }
 }
